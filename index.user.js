@@ -292,7 +292,7 @@ async function setupCourse() {
         debug(`url changed, location: ${location.pathname}, search: ${location.search}, hash: ${location.hash}`);
 
         if (/\/lesson\//.test(location.pathname)) {
-            await setupLesson();
+            await setupPlayer();
         }
         if (/\/course\//.test(location.pathname)) {
             await setupCourse();
