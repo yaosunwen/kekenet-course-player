@@ -6,8 +6,8 @@
 // @author       yaosunwen
 // @match        https://www.kekenet.com/lesson/*
 // @match        https://www.kekenet.com/course/*
-// @updateURL    https://raw.githubusercontent.com/yaosunwen/kekenet-course-player/main/index.js
-// @downloadURL  https://raw.githubusercontent.com/yaosunwen/kekenet-course-player/main/index.js
+// @updateURL    https://raw.githubusercontent.com/yaosunwen/kekenet-course-player/main/index.user.js
+// @downloadURL  https://raw.githubusercontent.com/yaosunwen/kekenet-course-player/main/index.user.js
 // @grant        GM_log
 // @grant        unsafeWindow
 // @run-at       document-idle
