@@ -11,7 +11,6 @@
 // @grant        GM_log
 // @grant        unsafeWindow
 // @run-at       document-idle
-// @connect      *
 // ==/UserScript==
 
 
