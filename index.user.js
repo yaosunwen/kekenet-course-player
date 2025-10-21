@@ -143,7 +143,7 @@ const hookedOpen = function() {
     courseToPlayerChannel.close();
 }
 
-function findNextLessonItem(lastTitle) {
+async function findNextLessonItem(lastTitle) {
     debug(`findNextLessonItem(${lastTitle})`);
   
     const list = document.querySelectorAll('div.card-box > div.card-con > div.news-list-item');
@@ -164,7 +164,7 @@ function findNextLessonItem(lastTitle) {
 
     if (foundIndex === -1) {
         return null;
-    } else (foundIndex+1 < list.length) {
+    } else if (foundIndex+1 < list.length) {
         return list[foundIndex+1]
     } else {
         const nextPageButton = document.querySelector('#app div.page-bar > div.el-pagination > button.btn-next.is-last');
@@ -180,13 +180,13 @@ function findNextLessonItem(lastTitle) {
             5000,
             500);
         
-        return findNextLessonItem();
+        return await findNextLessonItem();
     }
 }
 
 async function findAndOpenNextLesson(lastTitle) {
     debug(`findAndOpenNextLesson(${lastTitle})`);
-    let nextLessonItem = findNextLessonItem(lastTitle);
+    let nextLessonItem = await findNextLessonItem(lastTitle);
 
     if (nextLessonItem == null) {
       info(`Unable to find next lesson of ${lastTitle}`);
