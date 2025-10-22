@@ -243,7 +243,7 @@ async function setupPlayer() {
                 playerToCourseChannel.postMessage({code:'next', title: title});
                 playerToCourseChannel.close();
             }
-        }, 0);
+        });
 
         // press f8 to start player
         const f8Event = new KeyboardEvent('keydown', {
