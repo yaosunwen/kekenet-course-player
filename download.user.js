@@ -7,6 +7,8 @@
 // @match        https://www.kekenet.com/course/*
 // @require      https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js
 // @require      https://raw.githubusercontent.com/yaosunwen/kekenet-course-player/main/common.js
+// @updateURL    https://raw.githubusercontent.com/yaosunwen/kekenet-course-player/main/download.user.js
+// @downloadURL  https://raw.githubusercontent.com/yaosunwen/kekenet-course-player/main/download.user.js
 // @grant        GM_log
 // @grant        GM_xmlhttpRequest
 // @grant        GM_download
