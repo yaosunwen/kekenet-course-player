@@ -13,7 +13,8 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_download
 // @run-at       document-idle
-// @connect      *
+// @connect      self
+// @connect      kekenet.com
 // ==/UserScript==
 
 /**
@@ -83,7 +84,6 @@ function getNewsPage(catId, pageNumber, pageSize=10) {
 async function download() {
     debug(`download()`);
 
-    debug(`location.pathname = ${location.pathname}`);
     let match = /\/course\/(.*)/.exec(location.pathname);
     let courseId = match ? match[1] : null;
     debug(`courseId = ${courseId}`);
