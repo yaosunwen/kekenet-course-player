@@ -108,66 +108,68 @@ async function setupPlayer() {
         return;
     }
 
-    if (playerbar.dataset.isSetup === undefined) {
-        playerbar.dataset.isSetup = 'yes';
-
-        debug(`setup course-to-player channel`);
-        const courseToPlayerChannel = new BroadcastChannel('course-to-player');
-        courseToPlayerChannel.addEventListener("message", async (evt) => {
-            let message = evt.data;
-            debug('course-to-player:', message);
-            if (message.code === 'open') {
-                window.location.href = message.url;
-            }
-        });
-
-        triggerWhenDomChanged(document.querySelector('#player-start'), function() {
-            let current = document.querySelector('#player-start').textContent;
-            if (current === '00:00') {
-                const title = document.querySelector('div.player-box > div.player-top > div.player-title').textContent;
-                const playerToCourseChannel = new BroadcastChannel("player-to-course");
-                playerToCourseChannel.postMessage({code:'next', title: title});
-                playerToCourseChannel.close();
-            }
-        });
-
-        // press f8 to start player
-        const f8Event = new KeyboardEvent('keydown', {
-            key: 'F8',
-            keyCode: 119, // Key code for F8
-            which: 119,   // Deprecated, but good for broader compatibility
-            bubbles: true, // Event bubbles up the DOM tree
-            cancelable: true // Event can be canceled
-        });
-        playerbar.dispatchEvent(f8Event);
+    if (playerbar.dataset.isSetup !== undefined) {
+        return;
     }
+    playerbar.dataset.isSetup = 'yes';
+
+    debug(`setup course-to-player channel`);
+    const courseToPlayerChannel = new BroadcastChannel('course-to-player');
+    courseToPlayerChannel.addEventListener("message", async (evt) => {
+        let message = evt.data;
+        debug('course-to-player:', message);
+        if (message.code === 'open') {
+            window.location.href = message.url;
+        }
+    });
+
+    triggerWhenDomChanged(document.querySelector('#player-start'), function() {
+        let current = document.querySelector('#player-start').textContent;
+        if (current === '00:00') {
+            const title = document.querySelector('div.player-box > div.player-top > div.player-title').textContent;
+            const playerToCourseChannel = new BroadcastChannel("player-to-course");
+            playerToCourseChannel.postMessage({code:'next', title: title});
+            playerToCourseChannel.close();
+        }
+    });
+
+    // press f8 to start player
+    const f8Event = new KeyboardEvent('keydown', {
+        key: 'F8',
+        keyCode: 119, // Key code for F8
+        which: 119,   // Deprecated, but good for broader compatibility
+        bubbles: true, // Event bubbles up the DOM tree
+        cancelable: true // Event can be canceled
+    });
+    playerbar.dispatchEvent(f8Event);
 }
 
 async function setupCourse() {
     debug(`setupCourse()`);
-    const pagebar = await doUntil(
-        async () => document.querySelector('#app div.page-bar > div.el-pagination'),
+    const anchor = await doUntil(
+        async () => document.querySelector('#app div.news-list div.news-list-item'),
         async (e) => e != null,
         3000,
         500);
-    if (pagebar == null) {
-        debug(`pagebar was not found.`);
+    if (anchor == null) {
+        debug(`anchor was not found.`);
         return;
     }
 
-    if (pagebar.dataset.isSetup === undefined) {
-        pagebar.dataset.isSetup = 'yes';
-
-        debug(`setup player-to-course channel`);
-        const playerToCourseChannel = new BroadcastChannel("player-to-course");
-        playerToCourseChannel.addEventListener("message", async (evt) => {
-            let message = evt.data;
-            debug('player-to-course:', message);
-            if (message.code === 'next') {
-                await findAndOpenNextLesson(message.title);
-            }
-        });
+    if (anchor.dataset.isSetup !== undefined) {
+        return;
     }
+    anchor.dataset.isSetup = 'yes';
+
+    debug(`setup player-to-course channel`);
+    const playerToCourseChannel = new BroadcastChannel("player-to-course");
+    playerToCourseChannel.addEventListener("message", async (evt) => {
+        let message = evt.data;
+        debug('player-to-course:', message);
+        if (message.code === 'next') {
+            await findAndOpenNextLesson(message.title);
+        }
+    });
 }
 
 (async function() {
